@@ -48,6 +48,8 @@
                                     <a href="<?= base_url() ?>uploadImage">Upload Image</a>
                                     &nbsp;&nbsp;&nbsp;
                                     <a href="<?= base_url() ?>userInfo"><?= $this->session->userdata('username'); ?></a>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <a href="<?= base_url() ?>logout">Log Out</a>
                                 </div>
                             <?php } else { ?>
                                 <div class="social-icons">

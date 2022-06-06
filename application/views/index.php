@@ -5,16 +5,16 @@
             <div class="blog-masonry masonry-true">
                 <div class="post-masonry col-md-4 col-sm-6">
                     <div class="post-thumb">
-                        <img src="<?= base_url() ?>assets/images/1.jpg" alt="">
+                        <img src="https://dida-bucket.s3.amazonaws.com/3b0ce7d735de7b5c451e792145ce9aeb.jpg" alt="">
                         <div class="title-over">
-                            <h4><a href="#">Title one goes here</a></h4>
+                            <h4><a href="#">Image From Bucket</a></h4>
                         </div>
                         <div class="post-hover text-center">
                             <div class="inside">
                                 <i class="fa fa-plus"></i>
-                                <span class="date">25 Jan 2084</span>
-                                <h4><a href="#">Title one goes here</a></h4>
-                                <p>Cum sociis natoque penatibus et magnis dis parturient</p>
+                                <span class="date">June 4, 2022</span>
+                                <h4><a href="#">Image From Bucket</a></h4>
+                                <p>Example Image From My Bucket</p>
                             </div>
                         </div>
                     </div>
