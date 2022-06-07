@@ -3,6 +3,11 @@
     <div class="container">
         <div class="row">
             <div class="blog-masonry masonry-true">
+                <?php if ($img == null) {?>
+                    <div class="container post-masonry">
+                        <h1 style="height:50vh;">No Image Available Right Now</h1>
+                    </div>
+                <?php } ?>
                 <?php foreach ($img as $row) { ?>
                     <div class="post-masonry col-md-4 col-sm-6">
                         <div class="post-thumb">
