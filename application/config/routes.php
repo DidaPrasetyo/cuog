@@ -57,3 +57,5 @@ $route['login'] = 'MainCtl/login';
 $route['logginIn'] = 'MainCtl/loginAct';
 $route['registering'] = 'MainCtl/signupAct';
 $route['logout'] = 'MainCtl/logout';
+$route['uploadImage'] = 'MainCtl/uploadImage';
+$route['uploading'] = 'MainCtl/uploadingImage';

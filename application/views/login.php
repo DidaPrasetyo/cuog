@@ -13,7 +13,7 @@
                     <form id="loginform" class="form-horizontal" role="form" action="<?= base_url() ?>logginIn" method="POST">
                         <div style="margin-bottom: 25px" class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input id="username" type="text" class="form-control" name="username" placeholder="username" required>                                        
+                            <input id="username" type="text" class="form-control" name="username" placeholder="username" required>
                         </div>
                         <div style="margin-bottom: 25px" class="input-group">
                             <span class="input-group-addon"><i class="fa fa-key"></i></span>
