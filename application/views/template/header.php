@@ -45,9 +45,11 @@
                             <li><a href="#" class="fa fa-dribbble"></a></li> -->
                             <?php if ($this->session->userdata('status') == 'login') { ?>
                                 <div style="color: white;">
+                                    <a href="<?= base_url() ?>userImage">Your Image</a>
+                                    &nbsp;&nbsp;&nbsp;
                                     <a href="<?= base_url() ?>uploadImage">Upload Image</a>
                                     &nbsp;&nbsp;&nbsp;
-                                    <a href="<?= base_url() ?>userInfo"><?= $this->session->userdata('username'); ?></a>
+                                    <a href="<?= base_url() ?>ingfo"><?= $this->session->userdata('username'); ?></a>
                                     &nbsp;&nbsp;&nbsp;
                                     <a href="<?= base_url() ?>logout">Log Out</a>
                                 </div>

@@ -17,7 +17,10 @@
                             </div>
                             <div class="post-hover text-center">
                                 <div class="inside">
-                                    <i class="fa fa-plus"></i>
+                                    <!-- <i class="fa fa-plus"></i> -->
+                                    <?php if ($_SERVER['REQUEST_URI'] == '/cuog/userImage') { ?>
+                                        <a href="<?= base_url().'deleteImage/'.$row->id_img ?>"><i class="fa fa-trash"></i></a>
+                                    <?php } ?>
                                     <span class="date">June 4, 2022</span>
                                     <h4><a href="#"><?= $row->title ?></a></h4>
                                     <p><?= $row->description ?></p>

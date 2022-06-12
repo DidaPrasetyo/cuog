@@ -7,6 +7,9 @@ use Aws\S3\S3Client;
 
 class MainCtl extends CI_Controller {
 
+	private $s3Client;
+	private $bucket;
+
 	/**
 	 * Index Page for this controller.
 	 *
@@ -28,6 +31,16 @@ class MainCtl extends CI_Controller {
 		parent::__construct();
 		$this->load->model('MainModel');
 		date_default_timezone_set("Asia/Jakarta");
+		$this->bucket = 'dida-bucket';
+		$this->s3Client = new S3Client([
+			'version' => 'latest',
+			'region'  => 'us-east-1',
+			'credentials' => [
+				'key'    => 'ASIATRLZHDPVAQFUSEON',
+				'secret' => 'HOCdN5FriZCqs9C7dhnU2M91uf+Ivudw4LK96g27',
+				'token'  => 'FwoGZXIvYXdzEGgaDIwU6pR0G1LP1efccCLFAYHGy4YX9f0ej8avk3vTnqF7ThUURAUsovb5QBrvHu2+YR2mKeI3GckqDmhdo7JcNpQ8DMz20lWkM8E0P4ssGLbC3vB5LoX39JEcqXjZR6fO2v9makkicOw5PiqaLVrU9oXWf7uhgCa3NSLqXVAU2oIYKBfNgYQhnHvflVVryA1ZV/jhfJdPXK2OnHMjyq1newNNQpgRGidIAMDhkTn/fs9b3rjev+OggIhuw6SprDL618sH7+drbIm4ajlVkSI07+NO/mAaKMz0l5UGMi0/x+4htpVjHDPtpkzNXXZpCNCSjEPnq6WOj1zm0Xi+rfjNk/e7UBu02F8VUGo='
+			]
+		]);
 	}
 	
 	public function index()
@@ -74,7 +87,7 @@ class MainCtl extends CI_Controller {
 
 			$this->session->set_userdata($data_session);
 
-			redirect('MainCtl');
+			redirect(base_url());
 
 		} else {
 			return $this->login('Username atau Password anda salah');
@@ -103,6 +116,31 @@ class MainCtl extends CI_Controller {
 		redirect('login');
 	}
 
+	public function userUpdate()
+	{
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+		$email    = $this->input->post('email');
+		$fullname = $this->input->post('fullname');
+		
+		$data = array(
+			'username' => $username,
+			'fullname' => $fullname,
+			'email' => $email,
+		);
+		$data_pwd = array(
+			'userpwd' => md5($password),
+		);
+
+		if ($password != '') {
+			$data = array_merge($data,$data_pwd);
+		}
+
+		$this->MainModel->updateData('users', $data, array('id_user' => $this->session->userdata('id_user')));
+		
+		redirect('ingfo');
+	}
+
 	public function logout()
 	{
 		session_destroy();
@@ -126,15 +164,6 @@ class MainCtl extends CI_Controller {
 		if(!$this->session->userdata('status') == "login"){
 			return $this->login('Silahkan Login Terlebih Dahulu');
 		}
-		$s3Client = new S3Client([
-			'version' => 'latest',
-			'region'  => 'us-east-1',
-			'credentials' => [
-				'key'    => 'ASIATRLZHDPVMLTNWKGP',
-				'secret' => 'RPMVw0Cn7qmxcDiN4Z+tfVya17QxtSA37qn6g62k',
-				'token'  => 'FwoGZXIvYXdzEOj//////////wEaDKL+Gk3BaCf4GUqhAyLFAdal9gBkmunQVtpz7g8Kp4qNYQkoKyWOKa0JWuQ0a8N5nHfUbOo+MeWHaaPl1DTsr5JvIQczRqzvbnedWZmE/H4atz6ObzGpEELlZpdHHrS9Yx5g9cMJVWb7XPr+WF/wCrFHcgAg2GFvGWVQ54ZgVlQyjaBOjjRStdgxoxidpyYio4HMaQ9iePu0PXQ1JJ2v4Vw7E8LbOp6OfO1q3kaCyR53tftx5+XZzEGfe6vEg/Nzt0ndUk+vmgu45Q87GpMfUZ13YSPsKLHb+5QGMi39XWRhdXLXIrS/ge0OEcsMMYdHVZpL0kH/j7zfnSrJGVuu5q/oiiDBl7aOkN0='
-			]
-		]);
 
 		$title = $this->input->post('title');
 		$desc = $this->input->post('desc');
@@ -161,13 +190,12 @@ class MainCtl extends CI_Controller {
 				($id == NULL) ? $id = 1 : $id++;
 				$newFileName = $this->session->userdata('username') . ' - ' . $id . '.' . $ext;
 				if(move_uploaded_file($_FILES["uploadFile"]["tmp_name"], "upload/" . $newFileName)){
-					$bucket = 'dida-bucket';
 					$file_Path = './upload/'. $newFileName;
 					$key = basename($file_Path);
 
 					try {
-						$result = $s3Client->putObject([
-							'Bucket' => $bucket,
+						$result = $this->s3Client->putObject([
+							'Bucket' => $this->bucket,
 							'Key'    => $key,
 							'Body'   => fopen($file_Path, 'r'),
                             'ACL'    => 'public-read', // make file 'public'
@@ -180,7 +208,8 @@ class MainCtl extends CI_Controller {
 					$data = array(
 						'title' => $title,
 						'description' => $desc,
-						'filename' => $newFileName
+						'filename' => $newFileName,
+						'id_user' => $this->session->userdata('id_user'),
 					);
 
 					$this->MainModel->inputData('img_info', $data);
@@ -195,5 +224,47 @@ class MainCtl extends CI_Controller {
 		} else{
 			return $this->uploadImage('Error: ' . $_FILES["uploadFile"]["error"]);
 		}
+	}
+
+	public function userInfo($msg='', $flag='')
+	{
+		if(!$this->session->userdata('status') == "login"){
+			return $this->login('Silahkan Login Terlebih Dahulu');
+		}
+		$data['msg'] = $msg;
+		$data['flag'] = $flag;
+		$data['userInfo'] = $this->MainModel->getWhere('users', array('id_user' => $this->session->userdata('id_user')))->result();
+		$this->load->view('template/header');
+		$this->load->view('userInfo', $data);
+		$this->load->view('template/footer');
+	}
+
+	public function userImage()
+	{
+		if(!$this->session->userdata('status') == "login"){
+			return $this->login('Silahkan Login Terlebih Dahulu');
+		}
+		$data['img'] = $this->MainModel->getUserImage($this->session->userdata('id_user'));
+		$this->load->view('template/header');
+		$this->load->view('index', $data);
+		$this->load->view('template/footer');
+	}
+
+	public function deleteImage($id)
+	{
+		if(!$this->session->userdata('status') == "login"){
+			return $this->login('Silahkan Login Terlebih Dahulu');
+		}
+
+		$data = $this->MainModel->getWhere('img_info', array('id_img' => $id))->row();
+
+		// $result = $this->s3Client->deleteObject(array(
+		// 	'Bucket' => $this->bucket,
+		// 	'Key'    => $data->filename
+		// ));
+
+		$this->MainModel->deleteData('img_info', array('id_img' => $id));
+
+		redirect('userImage');
 	}
 }
