@@ -179,7 +179,7 @@ class MainCtl extends CI_Controller {
 			if(!array_key_exists($ext, $allowed)) die("Error: Please select a valid file format.");
 
         	// Validate file size - 10MB maximum
-			$maxsize = 10 * 1024 * 1024;
+			$maxsize = 2 * 1024 * 1024;
 			if($filesize > $maxsize) die("Error: File size is larger than the allowed limit.");
 
 
