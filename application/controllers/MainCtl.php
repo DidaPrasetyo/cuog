@@ -258,10 +258,10 @@ class MainCtl extends CI_Controller {
 
 		$data = $this->MainModel->getWhere('img_info', array('id_img' => $id))->row();
 
-		// $result = $this->s3Client->deleteObject(array(
-		// 	'Bucket' => $this->bucket,
-		// 	'Key'    => $data->filename
-		// ));
+		$result = $this->s3Client->deleteObject(array(
+			'Bucket' => $this->bucket,
+			'Key'    => $data->filename
+		));
 
 		$this->MainModel->deleteData('img_info', array('id_img' => $id));
 
