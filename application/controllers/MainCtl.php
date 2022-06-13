@@ -36,9 +36,9 @@ class MainCtl extends CI_Controller {
 			'version' => 'latest',
 			'region'  => 'us-east-1',
 			'credentials' => [
-				'key'    => 'ASIATRLZHDPVAQFUSEON',
-				'secret' => 'HOCdN5FriZCqs9C7dhnU2M91uf+Ivudw4LK96g27',
-				'token'  => 'FwoGZXIvYXdzEGgaDIwU6pR0G1LP1efccCLFAYHGy4YX9f0ej8avk3vTnqF7ThUURAUsovb5QBrvHu2+YR2mKeI3GckqDmhdo7JcNpQ8DMz20lWkM8E0P4ssGLbC3vB5LoX39JEcqXjZR6fO2v9makkicOw5PiqaLVrU9oXWf7uhgCa3NSLqXVAU2oIYKBfNgYQhnHvflVVryA1ZV/jhfJdPXK2OnHMjyq1newNNQpgRGidIAMDhkTn/fs9b3rjev+OggIhuw6SprDL618sH7+drbIm4ajlVkSI07+NO/mAaKMz0l5UGMi0/x+4htpVjHDPtpkzNXXZpCNCSjEPnq6WOj1zm0Xi+rfjNk/e7UBu02F8VUGo='
+				'key'    => 'ASIATRLZHDPVAWYLAWXU',
+				'secret' => 'LQjg+1CEr92lBtNysWXYW4QOQ8UQd1yQi33JRWqP',
+				'token'  => 'FwoGZXIvYXdzEHIaDH+Z9nXJk/AQtC/hhyLFAfKmY7YzuFqD1MKqg7ut+RqW0gjNGiZo8mPWiJK834MJwXXq4X96PAyWWKeCTlbR4b6d+In0BCO6CifLJdm86/At9F0311XeodrWhPHYKOKu6bU2kIjd2cW9hdy+R2DjznAAI94A7hY5NTmEHcynzmsv3uRH6A0sZRZuqlp96fWeq/LxgNV0NNbiZHs7Y36MlMIiNE7jNNyB0YfUyYGH+YeDC8IMTM7yluGDYDP0dCXcoeZKlOffgxirAcJiH1eQIOq0j5P6KKOPmpUGMi3VIMXtEFZuFUwp9yVEZz3TxBZa7uDFiGL4cY7v5akKs/fHikzIo1osPP1vWzE='
 			]
 		]);
 	}
